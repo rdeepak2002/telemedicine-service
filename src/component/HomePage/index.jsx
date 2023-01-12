@@ -61,7 +61,7 @@ const HomePage = () => {
             }}>
                 {/*Video Chat text at top of page*/}
                 <Grid item>
-                    <Typography variant={'h2'}>Video Chat</Typography>
+                    <Typography variant={'h2'}>Telemedicine Service</Typography>
                 </Grid>
 
                 {/*Text field for inputting name*/}
