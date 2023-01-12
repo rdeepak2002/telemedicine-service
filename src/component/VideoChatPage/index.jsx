@@ -278,6 +278,12 @@ const VideoChatPage = () => {
                 setClients(Object.assign({}, clientsCopy));
             });
 
+            if (isDoctor) {
+                socket.on("device-data", (data) => {
+                    console.log("got device data: ", data);
+                });
+            }
+
             // join the socket room
             socket.emit("join-room", userData);
 
