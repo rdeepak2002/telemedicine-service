@@ -70,9 +70,9 @@ io.on('connection', socket => {
     // console.log('user connected');
 
     socket.on('device-data', (deviceData) => {
-        const data = deviceData;
+        const data = JSON.parse(deviceData);
         data.time = Date.now();
-        io.emit('device-data', JSON.parse(data));
+        io.emit('device-data', data);
 
         // const data = {
         //     ekg: 1.0,
