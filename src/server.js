@@ -74,7 +74,7 @@ io.on('connection', socket => {
         try {
             data = JSON.parse(deviceData);
         } catch (error) {
-            console.log('Error parsing data to JSON object');
+            console.log('Error parsing data to JSON object: ', deviceData);
             console.error(error);
         }
         data.time = Date.now();
