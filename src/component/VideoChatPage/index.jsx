@@ -76,6 +76,9 @@ const VideoChatPage = () => {
         // },
     ]);
 
+    const [labels, setLabels] = useState(['0', '1', '2', '3', '4', '5', '6']);
+    const [data, setData] = useState(labels.map(() => faker.datatype.float({ min: -0.2, max: 1.0 })));
+
     // get the search string, ex: "?name=deepak&room-code=abc123"
     const {search} = useLocation();
 
@@ -303,7 +306,7 @@ const VideoChatPage = () => {
                 width: '100%',
                 height: '100%'
             }}>
-                <VideoFeeds heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
+                <VideoFeeds data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
                 <Chat clients={clients} chatMessages={chatMessages} socketHandler={socketHandler} userId={userId}/>
             </Grid>
         </Box>
@@ -324,14 +327,12 @@ const VideoFeeds = (props) => {
         },
     };
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
     const data = {
-        labels,
+        labels: props.labels,
         datasets: [
             {
                 label: 'EKG',
-                data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+                data: props.data,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
