@@ -78,6 +78,7 @@ io.on('connection', socket => {
             console.error(error);
         }
         data.time = Date.now();
+        console.log('sending data to client ', data);
         io.emit('device-data', data);
 
         // const data = {

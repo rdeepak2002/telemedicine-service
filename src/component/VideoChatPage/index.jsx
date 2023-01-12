@@ -284,6 +284,7 @@ const VideoChatPage = () => {
 
             if (true) {
                 socket.on("device-data", (data) => {
+                    console.log("got new data: ", data);
                     // console.log("got device data: ", data);
                     if (data.ekg && data.time) {
                         const newLabels = labels;
