@@ -283,6 +283,7 @@ const VideoChatPage = () => {
             });
 
             if (true) {
+                console.log("adding device data listener");
                 socket.on("device-data", (data) => {
                     console.log("got new data: ", data);
                     // console.log("got device data: ", data);
