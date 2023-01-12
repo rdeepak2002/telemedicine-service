@@ -6,6 +6,7 @@ import {k_video_chat_route} from "../../App";
 // constants to keep track of
 export const k_name_search_param = 'name';
 export const k_room_code_search_param = 'room-code';
+export const k_is_doctor = 'is-doctor';
 
 // landing page
 const HomePage = () => {
@@ -32,7 +33,8 @@ const HomePage = () => {
         // ex search params: "name=deepak&room-code=abc123" from http://localhost:3000/meet?name=deepak&room-code=abc123
         const searchParms = createSearchParams([
             [k_name_search_param, userName],
-            [k_room_code_search_param, roomCode]
+            [k_room_code_search_param, roomCode],
+            [k_is_doctor, userName.includes('Dr.')]
         ]);
 
         // then navigate to this new url which has the user's name and their inputted room code

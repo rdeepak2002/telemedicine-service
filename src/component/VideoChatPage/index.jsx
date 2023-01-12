@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import qs from "qs";
 import {k_video_chat_route} from "../../App";
-import {k_name_search_param, k_room_code_search_param} from "../HomePage";
+import {k_is_doctor, k_name_search_param, k_room_code_search_param} from "../HomePage";
 import socketIOClient from "socket.io-client";
 import {v4 as uuidV4} from 'uuid';
 import Peer from "peerjs";
@@ -55,6 +55,8 @@ const VideoChatPage = () => {
     const [temperature, setTemperature] = useState(98.6);
     const [oximetry, setOximetry] = useState(95);
 
+    const [isDoctor, setIsDoctor] = useState(false);
+
     const myVideoRef = useRef(undefined);
 
     // keep track of video clients
@@ -100,11 +102,18 @@ const VideoChatPage = () => {
         // get the name of person and room code from search params
         const nameFromSearch = parsedSearch[k_name_search_param];
         const roomCodeFromSearch = parsedSearch[k_room_code_search_param];
+        const isDoctorFromSearch = parsedSearch[k_is_doctor];
 
         // navigate to home if search params are not valid
         if (!nameFromSearch || nameFromSearch.length <= 0 || !roomCodeFromSearch || roomCodeFromSearch.length <= 0) {
             navigate(k_video_chat_route);
             return;
+        }
+
+        if (isDoctorFromSearch && isDoctorFromSearch === 'true') {
+            setIsDoctor(true);
+        } else {
+            setIsDoctor(false);
         }
 
         // otherwise if everything is valid and we were able to get the search params, store these as variables
@@ -306,7 +315,7 @@ const VideoChatPage = () => {
                 width: '100%',
                 height: '100%'
             }}>
-                <VideoFeeds data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
+                <VideoFeeds isDoctor={isDoctor} data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
                 <Chat clients={clients} chatMessages={chatMessages} socketHandler={socketHandler} userId={userId}/>
             </Grid>
         </Box>
@@ -322,7 +331,7 @@ const VideoFeeds = (props) => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Line Chart',
+                text: 'Patient Data',
             },
         },
     };
@@ -369,45 +378,48 @@ const VideoFeeds = (props) => {
                     }
                 </div>
             </Box>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 'calc(100% - 20px)',
-                    height: 'calc(40% - 40px)',
-                    bgcolor: 'white',
-                    color: 'text.primary',
-                    marginTop: '20px',
-                    marginLeft: '20px',
-                    marginBottom: '20px',
-                    borderRadius: '5px'
-                }}
-                className={'depth-shadow'}
-            >
-                <div style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                    <div style={{display: "flex", flexGrow: 0.6, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                        <div style={{width: "70%"}}>
-                            <Line options={options} data={data} />
+            {/*Dashboard*/}
+            {
+                props.isDoctor && (<Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 'calc(100% - 20px)',
+                        height: 'calc(40% - 40px)',
+                        bgcolor: 'white',
+                        color: 'text.primary',
+                        marginTop: '20px',
+                        marginLeft: '20px',
+                        marginBottom: '20px',
+                        borderRadius: '5px'
+                    }}
+                    className={'depth-shadow'}
+                >
+                    <div style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                        <div style={{display: "flex", flexGrow: 0.6, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                            <div style={{width: "70%"}}>
+                                <Line options={options} data={data} />
+                            </div>
+                        </div>
+                        <div style={{display: "flex", flexGrow: 0.4, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                            <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                                <p style={{textAlign: 'left', width: '50px'}}><strong>HR</strong></p>
+                                <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.heartRate} BPM</p>
+                            </div>
+                            <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                                <p style={{textAlign: 'left', width: '50px'}}><strong>TEMP</strong></p>
+                                <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.temperature} ºF</p>
+                            </div>
+                            <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                                <p style={{textAlign: 'left', width: '50px'}}><strong>SPO2</strong></p>
+                                <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.oximetry} %</p>
+                            </div>
                         </div>
                     </div>
-                    <div style={{display: "flex", flexGrow: 0.4, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
-                            <p style={{textAlign: 'left', width: '50px'}}><strong>HR</strong></p>
-                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.heartRate} BPM</p>
-                        </div>
-                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
-                            <p style={{textAlign: 'left', width: '50px'}}><strong>TEMP</strong></p>
-                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.temperature} ºF</p>
-                        </div>
-                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
-                            <p style={{textAlign: 'left', width: '50px'}}><strong>SPO2</strong></p>
-                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.oximetry} %</p>
-                        </div>
-                    </div>
-                </div>
-            </Box>
+                </Box>)
+            }
         </Grid>
     );
 }
