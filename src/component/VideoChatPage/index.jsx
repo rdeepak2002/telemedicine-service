@@ -305,7 +305,7 @@ const VideoFeeds = (props) => {
                             const client = props.clients[remoteStreamId];
 
                             return (
-                                <div key={remoteStreamId} className="video-feed">
+                                <div key={remoteStreamId} className="video-feed depth-shadow">
                                     <Video remoteStream={remoteStream} muted={props.userId === remoteStreamId}/>
                                     <Typography sx={{textAlign: 'center', marginTop: '10px'}}
                                                 variant={'h6'}>{client ? client.name : 'Loading...'}</Typography>
@@ -330,6 +330,7 @@ const VideoFeeds = (props) => {
                     marginBottom: '20px',
                     borderRadius: '5px'
                 }}
+                className={'depth-shadow'}
             >
                 TODO: dashboard
             </Box>
@@ -399,6 +400,7 @@ const Chat = (props) => {
                     marginLeft: '20px',
                     borderRadius: '5px'
                 }}
+                className={'depth-shadow'}
             >
                 {/*List of messages*/}
                 <Box
