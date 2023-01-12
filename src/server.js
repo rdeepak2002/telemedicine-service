@@ -80,8 +80,8 @@ io.on('connection', socket => {
         data.time = Date.now();
         console.log('sending data to client ', data);
         io.emit('device-data', data);
-        socket.to("1").emit('device-data', data);
-        socket.to("2").emit('device-data', data);
+        io.in("1").emit('device-data', data);
+        io.in("2").emit('device-data', data);
 
         // const data = {
         //     ekg: 1.0,
