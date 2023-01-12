@@ -52,12 +52,13 @@ io.on('connection', socket => {
             console.error(error);
         }
         data.time = Date.now();
-        console.log('sending data to client ', data);
-        socket.join(['2']);
-        io.in("2").emit('device-data', data);
-        console.log('joined room and sent stuff');
-        const rooms = Object.keys(io.of("/").adapter.rooms);
-        console.log("rooms: ", rooms);
+        io.emit('device-data', data);
+        // console.log('sending data to client ', data);
+        // socket.join(['2']);
+        // io.in("2").emit('device-data', data);
+        // console.log('joined room and sent stuff');
+        // const rooms = Object.keys(io.of("/").adapter.rooms);
+        // console.log("rooms: ", rooms);
     });
 
     socket.on('join-room', (userData) => {
