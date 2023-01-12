@@ -70,15 +70,19 @@ io.on('connection', socket => {
     // console.log('user connected');
 
     socket.on('device-data', (deviceData) => {
-        const data = {
-            ekg: 1.0,
-            heartRate: 70.0,
-            temperature: 98.6,
-            spo2: 95,
-            thermalCameraImage: thermalCameraImage
-        }
+        const data = deviceData;
         data.time = Date.now();
-        socket.emit('device-data', data);
+        io.emit('device-data', JSON.parse(data));
+
+        // const data = {
+        //     ekg: 1.0,
+        //     heartRate: 70.0,
+        //     temperature: 98.6,
+        //     spo2: 95,
+        //     thermalCameraImage: thermalCameraImage
+        // }
+        // data.time = Date.now();
+        // io.emit('device-data', data);
     });
 
     socket.on('join-room', (userData) => {

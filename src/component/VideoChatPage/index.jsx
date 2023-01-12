@@ -82,8 +82,8 @@ const VideoChatPage = () => {
         // },
     ]);
 
-    const [labels, setLabels] = useState(['0', '1', '2', '3', '4', '5', '6']);
-    const [data, setData] = useState(labels.map(() => faker.datatype.float({ min: -0.2, max: 1.0 })));
+    const [labels, setLabels] = useState([]);
+    const [data1, setData] = useState(labels.map(() => faker.datatype.float({ min: -0.2, max: 1.0 })));
 
     // get the search string, ex: "?name=deepak&room-code=abc123"
     const {search} = useLocation();
@@ -282,15 +282,15 @@ const VideoChatPage = () => {
                 setClients(Object.assign({}, clientsCopy));
             });
 
-            if (isDoctor) {
+            if (true) {
                 socket.on("device-data", (data) => {
-                    console.log("got device data: ", data);
+                    // console.log("got device data: ", data);
                     if (data.ekg && data.time) {
                         const newLabels = labels;
                         newLabels.push(data.time);
                         setLabels([...newLabels])
 
-                        const newData = data;
+                        const newData = data1;
                         newData.push(data.ekg);
                         setData([...newData])
                     }
@@ -346,7 +346,7 @@ const VideoChatPage = () => {
                 width: '100%',
                 height: '100%'
             }}>
-                <VideoFeeds setShowThermalImage={setShowThermalImage} showThermalImage={showThermalImage} thermalImageData={thermalImageData} isDoctor={isDoctor} data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
+                <VideoFeeds setShowThermalImage={setShowThermalImage} showThermalImage={showThermalImage} thermalImageData={thermalImageData} isDoctor={isDoctor} data={data1} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
                 <Chat clients={clients} chatMessages={chatMessages} socketHandler={socketHandler} userId={userId}/>
             </Grid>
         </Box>
@@ -402,7 +402,7 @@ const VideoFeeds = (props) => {
                                 // show thermal image data
                                 return (
                                     <div key={remoteStreamId} className="video-feed depth-shadow">
-                                        <img alt={'thermal camera image'} src={props.thermalImageData}/>
+                                        <img style={{width: "100%"}} alt={'thermal camera image'} src={props.thermalImageData}/>
                                         {/*<Video remoteStream={remoteStream} muted={props.userId === remoteStreamId}/>*/}
                                         <Typography sx={{textAlign: 'center', marginTop: '10px'}}
                                                     variant={'h6'}>{client ? client.name : 'Loading...'}</Typography>
