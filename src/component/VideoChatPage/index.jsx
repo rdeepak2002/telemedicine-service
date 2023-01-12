@@ -10,6 +10,7 @@ import Peer from "peerjs";
 
 // get url of socket server
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+console.log("API ENDPOINT", API_ENDPOINT);
 
 // keep track of possible status for clients
 const k_connected_status = "connected";
@@ -135,7 +136,8 @@ const VideoChatPage = () => {
             })
 
             // setup socket connection
-            const socket = process.env.REACT_APP_ENV === "PRODUCTION" ? socketIOClient(API_ENDPOINT, {secure: true}) : socketIOClient(API_ENDPOINT, {secure: true});
+            // const socket = process.env.REACT_APP_ENV === "PRODUCTION" ? socketIOClient(API_ENDPOINT, {secure: true}) : socketIOClient(API_ENDPOINT, {secure: true});
+            const socket = process.env.REACT_APP_ENV === "PRODUCTION" ? socketIOClient(API_ENDPOINT, {secure: true}) : socketIOClient(API_ENDPOINT, {secure: false});
 
             // function to call other peers
             const callPeer = (id) => {
