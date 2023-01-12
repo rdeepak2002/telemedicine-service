@@ -294,7 +294,7 @@ const VideoFeeds = (props) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    height: '70%',
+                    height: '60%',
                     color: 'text.primary'
                 }}
             >
@@ -321,10 +321,14 @@ const VideoFeeds = (props) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: '100%',
-                    height: '30%',
+                    width: 'calc(100% - 20px)',
+                    height: 'calc(40% - 40px)',
                     bgcolor: 'white',
-                    color: 'text.primary'
+                    color: 'text.primary',
+                    marginTop: '20px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                    borderRadius: '5px'
                 }}
             >
                 TODO: dashboard
@@ -385,10 +389,15 @@ const Chat = (props) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: '100%',
-                    height: '100%',
+                    width: 'calc(100% - 40px)',
+                    height: 'calc(100% - 40px)',
                     maxHeight: '100vh',
                     bgcolor: 'white',
+                    marginRight: '20px',
+                    marginTop: '20px',
+                    marginBottom: '20px',
+                    marginLeft: '20px',
+                    borderRadius: '5px'
                 }}
             >
                 {/*List of messages*/}
