@@ -332,7 +332,16 @@ const VideoFeeds = (props) => {
                 }}
                 className={'depth-shadow'}
             >
-                TODO: dashboard
+                <div style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                    <div style={{display: "flex", flexGrow: 0.8, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                        <p>TODO: graph</p>
+                    </div>
+                    <div style={{display: "flex", flexGrow: 0.2, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                        <p>TODO: heart rate</p>
+                        <p>TODO: temperature</p>
+                        <p>TODO: oximetry</p>
+                    </div>
+                </div>
             </Box>
         </Grid>
     );
