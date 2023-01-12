@@ -18,6 +18,16 @@ const HomePage = () => {
 
     // function called when clicking JOIN button
     const handleFormSubmission = () => {
+        if (userName.length === 0) {
+            alert('Please provide a name');
+            return;
+        }
+
+        if (roomCode.length === 0) {
+            alert('Please provide a room code');
+            return;
+        }
+
         // create the search params
         // ex search params: "name=deepak&room-code=abc123" from http://localhost:3000/meet?name=deepak&room-code=abc123
         const searchParms = createSearchParams([
@@ -70,7 +80,13 @@ const HomePage = () => {
                                onChange={(event) => {
                                    // function called when input field is changed
                                    setUserName(event.target.value);
-                               }}/>
+                               }}
+                               onKeyDown={(event) => {
+                                   if (event.key === 'Enter') {
+                                       handleFormSubmission()
+                                   }
+                               }}
+                    />
                 </Grid>
 
                 {/*Text field for inputting meeting id*/}
@@ -79,7 +95,13 @@ const HomePage = () => {
                                onChange={(event) => {
                                    // function called when input field is changed
                                    setRoomCode(event.target.value);
-                               }}/>
+                               }}
+                               onKeyDown={(event) => {
+                                   if (event.key === 'Enter') {
+                                       handleFormSubmission()
+                                   }
+                               }}
+                    />
                 </Grid>
 
                 {/*Button for joining a meeting after inputting the above information*/}

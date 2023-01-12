@@ -442,7 +442,7 @@ const Chat = (props) => {
 
                             if (client.socketId === props.userId) {
                                 return (
-                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-left-in round left-message">
+                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-right-in round right-message">
                                         <div className="talktext">
                                             <p style={{color: 'white'}}>{chatMessage.message}</p>
                                         </div>
@@ -450,9 +450,9 @@ const Chat = (props) => {
                                 );
                             } else {
                                 return (
-                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-right-in round right-message">
+                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-left-in round left-message">
                                         <div className="talktext">
-                                            <p style={{color: 'white'}}>{chatMessage.message}</p>
+                                            <p style={{color: 'black'}}>{chatMessage.message}</p>
                                         </div>
                                     </div>
                                 );
@@ -490,6 +490,11 @@ const Chat = (props) => {
                                    }} sx={{
                             flexGrow: 1
                         }}
+                           onKeyDown={(event) => {
+                               if (event.key === 'Enter') {
+                                   sendMessage(message);
+                               }
+                           }}
                         />
                         <Button variant="contained" onClick={() => {
                             sendMessage(message)

@@ -43,24 +43,25 @@ body {
 }
 
 .left-message {
-    margin-left: 10px;
+    margin-left: 25px;
+    background-color: #e5e5e9;
 }
 
 .right-message {
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 25px;
+    background-color: #1982FC;
 }
 
 /* CSS talk bubble */
 .talk-bubble {
     /*margin-left: 10px;*/
     /*margin-right: 10px;*/
-    margin-top: 20px;
+    margin-top: 25px;
     display: inline-block;
     position: relative;
     width: 200px;
     height: auto;
-    background-color: #1982FC;
 }
 .border{
     border: 8px solid #666;
@@ -172,7 +173,7 @@ body {
     top: auto;
     bottom: -20px;
     border: 12px solid;
-    border-color: #1982fc transparent transparent #1982fc;
+    border-color: #e5e5e9 transparent transparent #e5e5e9;
 }
 
 /*Right triangle, placed bottom right side slightly in*/
