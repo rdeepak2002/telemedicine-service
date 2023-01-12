@@ -7,6 +7,18 @@ import {k_name_search_param, k_room_code_search_param} from "../HomePage";
 import socketIOClient from "socket.io-client";
 import {v4 as uuidV4} from 'uuid';
 import Peer from "peerjs";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import faker from 'faker';
 
 // get url of socket server
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -15,6 +27,16 @@ console.log("API ENDPOINT", API_ENDPOINT);
 // keep track of possible status for clients
 const k_connected_status = "connected";
 const k_disconnected_status = "disconnected";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 // video chatting page
 const VideoChatPage = () => {
@@ -289,6 +311,33 @@ const VideoChatPage = () => {
 }
 
 const VideoFeeds = (props) => {
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart',
+            },
+        },
+    };
+
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'EKG',
+                data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+        ],
+    };
+
     return (
         <Grid item xs={9}>
             <Box
@@ -337,10 +386,12 @@ const VideoFeeds = (props) => {
                 className={'depth-shadow'}
             >
                 <div style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                    <div style={{display: "flex", flexGrow: 0.8, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                        <p>TODO: graph</p>
+                    <div style={{display: "flex", flexGrow: 0.6, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                        <div style={{width: "70%"}}>
+                            <Line options={options} data={data} />
+                        </div>
                     </div>
-                    <div style={{display: "flex", flexGrow: 0.2, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
+                    <div style={{display: "flex", flexGrow: 0.4, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
                         <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
                             <p style={{textAlign: 'left', width: '50px'}}><strong>HR</strong></p>
                             <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.heartRate} BPM</p>
