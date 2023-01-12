@@ -57,6 +57,10 @@ const VideoChatPage = () => {
 
     const [isDoctor, setIsDoctor] = useState(false);
 
+    const [thermalImageData, setThermalImageData] = useState('');
+
+    const [showThermalImage, setShowThermalImage] = useState(false);
+
     const myVideoRef = useRef(undefined);
 
     // keep track of video clients
@@ -321,7 +325,7 @@ const VideoChatPage = () => {
                 width: '100%',
                 height: '100%'
             }}>
-                <VideoFeeds isDoctor={isDoctor} data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
+                <VideoFeeds setShowThermalImage={setShowThermalImage} showThermalImage={showThermalImage} thermalImageData={thermalImageData} isDoctor={isDoctor} data={data} labels={labels} heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
                 <Chat clients={clients} chatMessages={chatMessages} socketHandler={socketHandler} userId={userId}/>
             </Grid>
         </Box>
@@ -373,13 +377,31 @@ const VideoFeeds = (props) => {
                             const remoteStream = props.remoteStreams[remoteStreamId];
                             const client = props.clients[remoteStreamId];
 
-                            return (
-                                <div key={remoteStreamId} className="video-feed depth-shadow">
-                                    <Video remoteStream={remoteStream} muted={props.userId === remoteStreamId}/>
-                                    <Typography sx={{textAlign: 'center', marginTop: '10px'}}
-                                                variant={'h6'}>{client ? client.name : 'Loading...'}</Typography>
-                                </div>
-                            );
+                            if (props.userId !== client?.socketId && props.showThermalImage) {
+                                // show thermal image data
+                                return (
+                                    <div key={remoteStreamId} className="video-feed depth-shadow">
+                                        <img alt={'thermal camera image'} src={props.thermalImageData}/>
+                                        {/*<Video remoteStream={remoteStream} muted={props.userId === remoteStreamId}/>*/}
+                                        <Typography sx={{textAlign: 'center', marginTop: '10px'}}
+                                                    variant={'h6'}>{client ? client.name : 'Loading...'}</Typography>
+                                        { props.isDoctor && (client?.socketId && props.userId !== client?.socketId) &&
+                                            <Button onClick={() => {props.setShowThermalImage(false)}} style={{width: "100%"}}>Disable Thermal Camera</Button>
+                                        }
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div key={remoteStreamId} className="video-feed depth-shadow">
+                                        <Video remoteStream={remoteStream} muted={props.userId === remoteStreamId}/>
+                                        <Typography sx={{textAlign: 'center', marginTop: '10px'}}
+                                                    variant={'h6'}>{client ? client.name : 'Loading...'}</Typography>
+                                        { props.isDoctor &&  (client?.socketId && props.userId !== client?.socketId) &&
+                                            <Button onClick={() => {props.setShowThermalImage(true)}} style={{width: "100%"}}>Enable Thermal Camera</Button>
+                                        }
+                                    </div>
+                                );
+                            }
                         })
                     }
                 </div>
