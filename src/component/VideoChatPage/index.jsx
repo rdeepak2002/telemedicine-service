@@ -288,12 +288,19 @@ const VideoChatPage = () => {
                     console.log("got new data: ", data);
                     // console.log("got device data: ", data);
                     if (data.ekg && data.time) {
+                        const MAX_LENGTH = 1000;
                         const newLabels = labels;
                         newLabels.push(data.time);
+                        while (newLabels.length > MAX_LENGTH) {
+                            newLabels.shift();
+                        }
                         setLabels([...newLabels])
 
                         const newData = data1;
                         newData.push(data.ekg);
+                        while (newData.length > MAX_LENGTH) {
+                            newData.shift();
+                        }
                         setData([...newData])
                     }
                     if (data.heartRate) {
