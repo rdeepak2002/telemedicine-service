@@ -288,7 +288,7 @@ const VideoChatPage = () => {
                     console.log("got new data: ", data);
                     // console.log("got device data: ", data);
                     if (data.ekg && data.time) {
-                        const MAX_LENGTH = 1000;
+                        const MAX_LENGTH = 100;
                         const newLabels = labels;
                         newLabels.push(data.time);
                         while (newLabels.length > MAX_LENGTH) {
@@ -302,6 +302,8 @@ const VideoChatPage = () => {
                             newData.shift();
                         }
                         setData([...newData])
+
+                        console.log('new lengths: ', newLabels.length, newData.length);
                     }
                     if (data.heartRate) {
                         setHeartRate(data.heartRate);
@@ -372,8 +374,11 @@ const VideoFeeds = (props) => {
             title: {
                 display: true,
                 text: 'Patient Data',
-            },
+            }
         },
+        animation: {
+            duration: 0
+        }
     };
 
     const data = {
