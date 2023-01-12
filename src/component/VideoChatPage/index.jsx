@@ -285,6 +285,27 @@ const VideoChatPage = () => {
             if (isDoctor) {
                 socket.on("device-data", (data) => {
                     console.log("got device data: ", data);
+                    if (data.ekg && data.time) {
+                        const newLabels = labels;
+                        newLabels.push(data.time);
+                        setLabels([...newLabels])
+
+                        const newData = data;
+                        newData.push(data.ekg);
+                        setData([...newData])
+                    }
+                    if (data.heartRate) {
+                        setHeartRate(data.heartRate);
+                    }
+                    if (data.temperature) {
+                        setTemperature(data.temperature);
+                    }
+                    if (data.spo2) {
+                        setOximetry(data.spo2);
+                    }
+                    if (data.thermalCameraImage) {
+                        setThermalImageData(data.thermalCameraImage);
+                    }
                 });
             }
 
