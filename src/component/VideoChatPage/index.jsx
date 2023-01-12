@@ -29,6 +29,10 @@ const VideoChatPage = () => {
     const [roomCode, setRoomCode] = useState('');
     const [userId, setUserId] = useState(`${uuidV4()}`);
 
+    const [heartRate, setHeartRate] = useState(70);
+    const [temperature, setTemperature] = useState(98.6);
+    const [oximetry, setOximetry] = useState(95);
+
     const myVideoRef = useRef(undefined);
 
     // keep track of video clients
@@ -277,7 +281,7 @@ const VideoChatPage = () => {
                 width: '100%',
                 height: '100%'
             }}>
-                <VideoFeeds userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
+                <VideoFeeds heartRate={heartRate} temperature={temperature} oximetry={oximetry} userId={userId} clients={clients} myVideoRef={myVideoRef} remoteStreams={remoteStreams}/>
                 <Chat clients={clients} chatMessages={chatMessages} socketHandler={socketHandler} userId={userId}/>
             </Grid>
         </Box>
@@ -337,9 +341,18 @@ const VideoFeeds = (props) => {
                         <p>TODO: graph</p>
                     </div>
                     <div style={{display: "flex", flexGrow: 0.2, flexDirection: "column", alignItems: "center", alignContent: "center", justifyContent: "center"}}>
-                        <p>TODO: heart rate</p>
-                        <p>TODO: temperature</p>
-                        <p>TODO: oximetry</p>
+                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                            <p style={{textAlign: 'left', width: '50px'}}><strong>HR</strong></p>
+                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.heartRate} BPM</p>
+                        </div>
+                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                            <p style={{textAlign: 'left', width: '50px'}}><strong>TEMP</strong></p>
+                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.temperature} ºF</p>
+                        </div>
+                        <div style={{width: "100%", maxWidth: "150px", display: "flex", flexDirection: "row", columnGap: "10px"}}>
+                            <p style={{textAlign: 'left', width: '50px'}}><strong>SPO2</strong></p>
+                            <p style={{textAlign: 'right', flexGrow: 1.0}}>{props.oximetry} %</p>
+                        </div>
                     </div>
                 </div>
             </Box>
