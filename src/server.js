@@ -70,7 +70,13 @@ io.on('connection', socket => {
     // console.log('user connected');
 
     socket.on('device-data', (deviceData) => {
-        const data = JSON.parse(deviceData);
+        let data = {};
+        try {
+            data = JSON.parse(deviceData);
+        } catch (error) {
+            console.log('Error parsing data to JSON object');
+            console.error(error);
+        }
         data.time = Date.now();
         io.emit('device-data', data);
 
