@@ -10,14 +10,14 @@ export const k_video_chat_route = "/meet";
 // setup dark theme for app
 const theme = createTheme({
     palette: {
-        mode: 'dark',
-        primary: {
-            main: '#3F51B5',
-        },
+        mode: 'light',
+        // primary: {
+        //     main: '#3F51B5',
+        // },
         background: {
-            default: '#343434',
-            darker: '#232323',
-            darkest: '#151515'
+            default: '#f1f1f1',
+            // darker: '#232323',
+            // darkest: '#151515'
         }
     },
 });

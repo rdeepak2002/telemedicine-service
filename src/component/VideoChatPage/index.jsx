@@ -295,7 +295,6 @@ const VideoFeeds = (props) => {
                     justifyContent: 'center',
                     width: '100%',
                     height: '100%',
-                    bgcolor: 'background.default',
                     color: 'text.primary'
                 }}
             >
@@ -375,8 +374,7 @@ const Chat = (props) => {
                     width: '100%',
                     height: '100%',
                     maxHeight: '100vh',
-                    bgcolor: 'background.darker',
-                    color: 'text.primary'
+                    bgcolor: 'white',
                 }}
             >
                 {/*List of messages*/}
@@ -389,32 +387,51 @@ const Chat = (props) => {
                         flexGrow: 1,
                         width: '100%',
                         color: 'text.primary',
-                        overflowY: 'auto'
+                        overflowY: 'auto',
+                        overflowX: 'hidden'
                     }}
                 >
                     {
                         props.chatMessages.map((chatMessage) => {
                             const client = props.clients[chatMessage.socketId]
 
-                            return (
-                                <div
-                                    key={chatMessage.guid}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                >
-                                    <Typography>Name: {client ? client.name : 'Loading...'}</Typography>
-                                    <Typography>Message: {chatMessage.message}</Typography>
-                                    {/*grey horizontal line*/}
-                                    <div style={{
-                                        marginTop: '10px',
-                                        marginBottom: '10px',
-                                        width: '100%',
-                                        height: '2px',
-                                        background: '#6b6b6b'
-                                    }}/>
-                                </div>
-                            );
+                            // return (
+                            //     <div
+                            //         key={chatMessage.guid}
+                            //         style={{
+                            //             width: '100%',
+                            //         }}
+                            //     >
+                            //         <Typography>Name: {client ? client.name : 'Loading...'}</Typography>
+                            //         <Typography>Message: {chatMessage.message}</Typography>
+                            //         {/*grey horizontal line*/}
+                            //         <div style={{
+                            //             marginTop: '10px',
+                            //             marginBottom: '10px',
+                            //             width: '100%',
+                            //             height: '2px',
+                            //             background: '#6b6b6b'
+                            //         }}/>
+                            //     </div>
+                            // );
+
+                            if (client.socketId === props.userId) {
+                                return (
+                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-left-in round left-message">
+                                        <div className="talktext">
+                                            <p style={{color: 'white'}}>{chatMessage.message}</p>
+                                        </div>
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div key={chatMessage.guid} className="talk-bubble tri-right btm-right-in round right-message">
+                                        <div className="talktext">
+                                            <p style={{color: 'white'}}>{chatMessage.message}</p>
+                                        </div>
+                                    </div>
+                                );
+                            }
                         })
                     }
                 </Box>
