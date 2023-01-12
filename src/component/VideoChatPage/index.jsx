@@ -294,7 +294,7 @@ const VideoFeeds = (props) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    height: '100%',
+                    height: '70%',
                     color: 'text.primary'
                 }}
             >
@@ -314,6 +314,20 @@ const VideoFeeds = (props) => {
                         })
                     }
                 </div>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '30%',
+                    bgcolor: 'white',
+                    color: 'text.primary'
+                }}
+            >
+                TODO: dashboard
             </Box>
         </Grid>
     );
