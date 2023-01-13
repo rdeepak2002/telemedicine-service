@@ -283,9 +283,9 @@ const VideoChatPage = () => {
             });
 
             if (true) {
-                console.log("adding device data listener");
+                // console.log("adding device data listener");
                 socket.on("device-data", (data) => {
-                    console.log("got new data: ", data);
+                    // console.log("got new data: ", data);
                     // console.log("got device data: ", data);
                     if (data.ekg && data.time) {
                         const MAX_LENGTH = 100;
@@ -303,7 +303,7 @@ const VideoChatPage = () => {
                         }
                         setData([...newData])
 
-                        console.log('new lengths: ', newLabels.length, newData.length);
+                        // console.log('new lengths: ', newLabels.length, newData.length);
                     }
                     if (data.heartRate) {
                         setHeartRate(data.heartRate);
