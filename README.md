@@ -11,6 +11,8 @@ Install the following software to run this program:
 
 ## How to Run (Development)
 
+Run the following commands in your terminal:
+
 ```
 git clone https://github.com/rdeepak2002/telemedicine-service
 cd telemedicine-service
@@ -19,6 +21,8 @@ npm run dev
 ```
 
 ## How to Run (Production)
+
+Run the following commands in your terminal:
 
 ```
 git clone https://github.com/rdeepak2002/telemedicine-service
