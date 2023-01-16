@@ -47,10 +47,10 @@ void loop() {
   }
   else {
     Serial.println(analogRead(ecg_val));
-    //Serial.println(particleSensor.getRed());
-    //Serial.println(particleSensor.getIR());
-    //bleuart.println(particleSensor.getRed());
-    //bleuart.println(particleSensor.getIR());
+    Serial.println(particleSensor.getRed());
+    Serial.println(particleSensor.getIR());
+    bleuart.println(particleSensor.getRed());
+    bleuart.println(particleSensor.getIR());
     bleuart.println(analogRead(ecg_val));
   }
   delay(1);
